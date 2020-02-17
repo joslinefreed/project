@@ -48,20 +48,6 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         table: QTableWidget = self.findStockTable()
         table.sortItems(logical_index, QtCore.Qt.AscendingOrder)
 
-    def myRead(self):
-        db = 'Book Selling Database.db'
-        print()
-        print("Reading customer details from the database:")
-        results = datalayer.CustomerDetails(db)
-        for row in results:
-            print('\t'.join([str(x) for x in row]))
-
-        print()
-        print("Reading order customer names from the database:")
-        results = datalayer.OrderCustomerName(db)
-        for row in results:
-                print('\t'.join([str(x) for x in row]))
-
     def refreshColumn(self, results, column, table):
 
         table.setColumnWidth(column, 100)
@@ -80,74 +66,6 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
                 item: QTableWidgetItem = QTableWidgetItem(name)
                 table.setItem(row_index, column, QTableWidgetItem(name))
                 row_index = row_index + 1
-
-    def findCustomerTable(self) -> QTableWidget:
-        # Find the customer table widget
-        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-        first_tab: QWidget = tab.findChild(QWidget, "customerTab")
-        table: QTableWidget = first_tab.findChild(QTableWidget, "customerTable")
-
-        return table
-
-
-    #def findCurrentTable(self) -> QTableWidget:
-    #    # Find the current table widget that is shown
-    #    tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-    #    index = tab.currentIndex()
-    #    print(index)
-    #    table: QTableWidget = None
-    #    if index == 1:
-    #        first_tab: QWidget = tab.findChild(QWidget, "customerTab")
-    #        table = first_tab.findChild(QTableWidget, "customerTable")
-    #    elif index == 2:
-    #        first_tab: QWidget = tab.findChild(QWidget, "stockTab")
-    #        table = first_tab.findChild(QTableWidget, "stockTable")
-    #    return table
-
-    def refreshCustomers(self):
-        db = 'Book Selling Database.db'
-
-        # Find the customer table widget
-        table: QTableWidget = self.findCustomerTable()
-
-        # iterate each row for a specific column
-
-        # repeat the function for each column
-        names = datalayer.CustomerName(db)
-        self.refreshColumn(names, 0, table)
-
-        email = datalayer.CustomerEmail(db)
-        self.refreshColumn(email, 1, table)
-
-        tel = datalayer.CustomerTel(db)
-        self.refreshColumn(tel, 2, table)
-
-        address = datalayer.CustomerAddress(db)
-        self.refreshColumn(address, 3, table)
-
-        discount = datalayer.CustomerDiscount(db)
-        self.refreshColumn(discount, 4, table)
-
-    def addCustomer(self):
-        customer_dialog = customerdialog.CustomerDialog()
-        customer_dialog.exec_()
-        self.refreshCustomers()
-
-        '''
-        # Find the customer table widget
-        table: QTableWidget = self.findCustomerTable()
-
-        # if there are no rows
-        if table.rowCount() == 0:
-            # Refresh the customers
-            self.refreshCustomers()
-
-        # add a row
-        row_count = table.rowCount() + 1
-        table.setRowCount(row_count)
-
-        print("Add Customer")
-        '''
 
     def findStockTable(self) -> QTableWidget:
         # Find the stock table widget
@@ -182,6 +100,49 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         stock_dialog.exec_()
         self.refreshStock()
 
+    def searchStock(self):
+        pass
+
+    def findCustomerTable(self) -> QTableWidget:
+        # Find the customer table widget
+        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
+        first_tab: QWidget = tab.findChild(QWidget, "customerTab")
+        table: QTableWidget = first_tab.findChild(QTableWidget, "customerTable")
+
+        return table
+
+    def refreshCustomers(self):
+        db = 'Book Selling Database.db'
+
+        # Find the customer table widget
+        table: QTableWidget = self.findCustomerTable()
+
+        # iterate each row for a specific column
+
+        # repeat the function for each column
+        names = datalayer.CustomerName(db)
+        self.refreshColumn(names, 0, table)
+
+        email = datalayer.CustomerEmail(db)
+        self.refreshColumn(email, 1, table)
+
+        tel = datalayer.CustomerTel(db)
+        self.refreshColumn(tel, 2, table)
+
+        address = datalayer.CustomerAddress(db)
+        self.refreshColumn(address, 3, table)
+
+        discount = datalayer.CustomerDiscount(db)
+        self.refreshColumn(discount, 4, table)
+
+    def addCustomer(self):
+        customer_dialog = customerdialog.CustomerDialog()
+        customer_dialog.exec_()
+        self.refreshCustomers()
+
+    def searchCustomers(self):
+        pass
+
     def findOrdersTable(self) -> QTableWidget:
         # Find the order headers table widget
         tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
@@ -208,6 +169,15 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
 
         date = datalayer.OrderDate(db)
         self.refreshColumn(date, 3, table)
+
+    def addHeader(self):
+        pass
+
+    def addLines(self):
+        pass
+
+    def searchOrders(self):
+        pass
 
     def help(self):
         self.helpWidget.show()
