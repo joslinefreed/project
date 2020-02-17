@@ -4,12 +4,12 @@ from PyQt5.QtGui import QFocusEvent
 from PyQt5.uic.properties import QtGui
 
 import datalayer
+import window
 
 from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QDialog, QPushButton, QPlainTextEdit, \
     QDialogButtonBox
 
-import window
 
 dialog1 = uic.loadUiType("CustomerAdd.ui")[0]
 
@@ -43,3 +43,4 @@ class CustomerDialog(QtWidgets.QDialog, dialog1):
     def accept(self):
         self.findData()
         self.close()
+

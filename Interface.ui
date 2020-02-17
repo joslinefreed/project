@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Order Management</string>
+   <string>Order Management System</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:rgb(203, 235, 255);</string>
@@ -27,7 +27,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>20</y>
       <width>571</width>
       <height>321</height>
      </rect>
@@ -341,7 +341,7 @@ font: 12pt &quot;Calibri&quot;;</string>
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>0</y>
+      <y>10</y>
       <width>20</width>
       <height>20</height>
      </rect>
@@ -357,8 +357,8 @@ font: 87 10pt &quot;Arial Black&quot;;</string>
    <widget class="QWidget" name="helpWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>0</y>
+      <x>180</x>
+      <y>110</y>
       <width>221</width>
       <height>131</height>
      </rect>
@@ -408,22 +408,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      </property>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>591</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuNew">
-    <property name="title">
-     <string>Order Management System</string>
-    </property>
-   </widget>
-   <addaction name="menuNew"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOrders">

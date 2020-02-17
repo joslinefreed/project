@@ -131,6 +131,7 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
     def addCustomer(self):
         customer_dialog = customerdialog.CustomerDialog()
         customer_dialog.exec_()
+        self.refreshCustomers()
 
         '''
         # Find the customer table widget
@@ -179,6 +180,7 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
     def addStock(self):
         stock_dialog = stockdialog.StockDialog()
         stock_dialog.exec_()
+        self.refreshStock()
 
     def findOrdersTable(self) -> QTableWidget:
         # Find the order headers table widget
