@@ -54,6 +54,16 @@ def CustomerDiscount(db):
     results = sql_command(db, sql)
     return results
 
+    # convert the values to integers
+    #discounts = []
+    #for row in results:
+    #    for x in row:
+    #        if x is None:
+    #            discounts.append(x)
+    #        else:
+    #            discounts.append(int(x))
+    #return discounts
+
 
 def StockTitle(db):
     sql = '''
@@ -86,6 +96,51 @@ def StockQuantity(db):
     sql = '''
     SELECT Quantity
     FROM Stock
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def OrderCustomer(db):
+    sql = '''
+    SELECT CustomerID
+    FROM OrderHeader
+    '''
+    results = sql_command(db, sql)
+    return results
+
+def OrderCustomerName(db):
+    sql = '''
+    SELECT Customer.Name
+    FROM OrderHeader
+    INNER JOIN Customer
+    ON OrderHeader.CustomerID = Customer.CustomerID
+    '''
+    results = sql_command(db, sql)
+    return results
+
+def OrderDeliveryAddress(db):
+    sql = '''
+    SELECT DeliveryAddress
+    FROM OrderHeader
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def OrderDeliveryCharge(db):
+    sql = '''
+    SELECT DeliveryCharge
+    FROM OrderHeader
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def OrderDate(db):
+    sql = '''
+    SELECT OrderDate
+    FROM OrderHeader
     '''
     results = sql_command(db, sql)
     return results
