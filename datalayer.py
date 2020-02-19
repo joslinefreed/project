@@ -10,11 +10,19 @@ def CustomerDetails(db):
     return results
 
 
-def CustomerName(db):
+def CustomerName(db, sort=False):
     sql = '''
     SELECT Name 
     FROM Customer
     '''
+
+    if (sort):
+        sql = '''
+        SELECT Name 
+        FROM Customer
+        ORDER BY 1
+        '''
+
     results = sql_command(db, sql)
     return results
 
@@ -145,11 +153,28 @@ def OrderDate(db):
     results = sql_command(db, sql)
     return results
 
+def findCustomerID(db,name):
+    sql = '''
+    SELECT CustomerID
+    FROM Customer
+    WHERE Name = ?
+    '''
+    print("I'm here")
+    results = sql_find(db, name, sql)
+    print("after find")
+    print(results)
 
 def AddCustomerDetails(db, data):
     sql = '''
     INSERT INTO Customer (Name, Email, Tel, Address, Discount)
     VALUES(?, ?, ?, ?, ?)'''
+    sql_add(db, data, sql)
+    pass
+
+def AddStockDetails(db, data):
+    sql = '''
+    INSERT INTO Stock (Title, Author, ListPrice, Quantity)
+    VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
     pass
 
@@ -167,7 +192,6 @@ def sql_command(db, command, commit=False):
     if commit:
         con.commit()
     results = cur.fetchall()
-    results.insert(0, [desc[0] for desc in cur.description])
     return results
 
 
@@ -179,6 +203,14 @@ def sql_add(db, data, command):
         con.commit()
     pass
 
+def sql_find(db, data, command):
+    con = lite.connect(db)
+    with con:
+        cur = con.cursor()
+        cur.execute(command, data)
+        con.commit()
+    results = cur.fetchall()
+    return results
 
 def output_response(response):
     for row in response:

@@ -3,6 +3,7 @@ import sys
 import datalayer
 import customerdialog
 import stockdialog
+import orderdialog
 
 from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView, QTableView, QDialog, \
@@ -31,22 +32,36 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         customer_table: QTableWidget = self.findCustomerTable()
         customer_header: QHeaderView = customer_table.horizontalHeader()
         customer_header.sectionClicked.connect(self.customerHeaderSectionClicked)
+        customerArray = [False]*5
 
         # Get the header view from the stock table and connect it for when the section is clicked
         stock_table: QTableWidget = self.findStockTable()
         stock_header: QHeaderView = stock_table.horizontalHeader()
         stock_header.sectionClicked.connect(self.stockHeaderSectionClicked)
 
-    def customerHeaderSectionClicked(self, logical_index: int):
+    def customerHeaderSectionClicked(self, logicalindex: int):
         # Find the customer table widget and sort the column
+        self.customerArray
         table: QTableWidget = self.findCustomerTable()
-        table.sortItems(logical_index, QtCore.Qt.AscendingOrder)
         header: QHeaderView = table.horizontalHeader()
+        print(self.customerArray[logicalindex])
+        if not self.customerArray[logicalindex]:
+            table.sortItems(logicalindex, QtCore.Qt.AscendingOrder)
+            header.setSortIndicator(logicalindex, QtCore.Qt.AscendingOrder)
+            self.customerArray[logicalindex] = True
+        else:
+            table.sortItems(logicalindex, QtCore.Qt.DescendingOrder)
+            header.setSortIndicator(logicalindex, QtCore.Qt.DescendingOrder)
+            self.customerArray[logicalindex] = False
+        header.setSortIndicatorShown(True)
 
-    def stockHeaderSectionClicked(self, logical_index: int):
+    def stockHeaderSectionClicked(self, logicalindex: int):
         # Find the stock table widget and sort the column
         table: QTableWidget = self.findStockTable()
-        table.sortItems(logical_index, QtCore.Qt.AscendingOrder)
+        table.sortItems(logicalindex, QtCore.Qt.AscendingOrder)
+        header: QHeaderView = table.horizontalHeader()
+        header.setSortIndicator(logicalindex, QtCore.Qt.AscendingOrder)
+        header.setSortIndicatorShown(True)
 
     def refreshColumn(self, results, column, table):
 
@@ -55,17 +70,12 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         table.setRowCount(row_count)
 
         row_index: int = 0
-        heading_row = True
         for row in results:
-            if heading_row:
-                # Skip the heading by not adding it
-                heading_row = False
-            else:
-                # Set the item in the table to being the name
-                name: str = [str(x) for x in row][0]
-                item: QTableWidgetItem = QTableWidgetItem(name)
-                table.setItem(row_index, column, QTableWidgetItem(name))
-                row_index = row_index + 1
+            # Set the item in the table to being the name
+            name: str = [str(x) for x in row][0]
+            item: QTableWidgetItem = QTableWidgetItem(name)
+            table.setItem(row_index, column, QTableWidgetItem(name))
+            row_index = row_index + 1
 
     def findStockTable(self) -> QTableWidget:
         # Find the stock table widget
@@ -171,7 +181,8 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         self.refreshColumn(date, 3, table)
 
     def addHeader(self):
-        pass
+        order_dialog = orderdialog.HeaderDialog()
+        order_dialog.exec_()
 
     def addLines(self):
         pass
