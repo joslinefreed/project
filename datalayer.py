@@ -117,6 +117,7 @@ def OrderCustomer(db):
     results = sql_command(db, sql)
     return results
 
+
 def OrderCustomerName(db):
     sql = '''
     SELECT Customer.Name
@@ -126,6 +127,7 @@ def OrderCustomerName(db):
     '''
     results = sql_command(db, sql)
     return results
+
 
 def OrderDeliveryAddress(db):
     sql = '''
@@ -153,6 +155,7 @@ def OrderDate(db):
     results = sql_command(db, sql)
     return results
 
+
 def findCustomerID(db,name):
     sql = '''
     SELECT CustomerID
@@ -164,6 +167,7 @@ def findCustomerID(db,name):
     print("after find")
     print(results)
 
+
 def AddCustomerDetails(db, data):
     sql = '''
     INSERT INTO Customer (Name, Email, Tel, Address, Discount)
@@ -171,12 +175,6 @@ def AddCustomerDetails(db, data):
     sql_add(db, data, sql)
     pass
 
-def AddStockDetails(db, data):
-    sql = '''
-    INSERT INTO Stock (Title, Author, ListPrice, Quantity)
-    VALUES(?, ?, ?, ?)'''
-    sql_add(db, data, sql)
-    pass
 
 def AddStockDetails(db, data):
     sql = '''
@@ -184,6 +182,15 @@ def AddStockDetails(db, data):
     VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
     pass
+
+
+def AddStockDetails(db, data):
+    sql = '''
+    INSERT INTO Stock (Title, Author, ListPrice, Quantity)
+    VALUES(?, ?, ?, ?)'''
+    sql_add(db, data, sql)
+    pass
+
 
 def sql_command(db, command, commit=False):
     con = lite.connect(db)
@@ -203,14 +210,14 @@ def sql_add(db, data, command):
         con.commit()
     pass
 
+
 def sql_find(db, data, command):
     con = lite.connect(db)
-    with con:
-        cur = con.cursor()
-        cur.execute(command, data)
-        con.commit()
-    results = cur.fetchall()
-    return results
+    cur = con.cursor()
+    cur.execute(command, (data,))
+    results = cur.fetchone()
+    return results[0]
+
 
 def output_response(response):
     for row in response:
