@@ -156,16 +156,45 @@ def OrderDate(db):
     return results
 
 
-def findCustomerID(db,name):
+def OrderNumber(db):
+    sql = '''
+    SELECT OrderNumber
+    FROM OrderHeader
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def OrderBookName(db, orderNumber):
+    sql = '''
+    SELECT Stock.Title
+    FROM OrderLines
+    INNER JOIN Stock
+    ON OrderLines.StockCode = Stock.StockID
+    WHERE OrderNumber = ?
+    '''
+    results = sql_findall(db, orderNumber, sql)
+    return results
+
+
+def OrderQuantity(db, orderNumber):
+    sql = '''
+    SELECT Quantity
+    FROM OrderLines
+    WHERE OrderNumber = ?
+    '''
+    results = sql_findall(db, orderNumber, sql)
+    return results
+
+
+def findCustomerID(db, name):
     sql = '''
     SELECT CustomerID
     FROM Customer
     WHERE Name = ?
     '''
-    print("I'm here")
     results = sql_find(db, name, sql)
-    print("after find")
-    print(results)
+    return results
 
 
 def AddCustomerDetails(db, data):
@@ -179,6 +208,14 @@ def AddCustomerDetails(db, data):
 def AddStockDetails(db, data):
     sql = '''
     INSERT INTO Stock (Title, Author, ListPrice, Quantity)
+    VALUES(?, ?, ?, ?)'''
+    sql_add(db, data, sql)
+    pass
+
+
+def AddHeaderDetails(db, data):
+    sql = '''
+    INSERT INTO OrderHeader (CustomerID, DeliveryAddress, DeliveryCharge, OrderDate)
     VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
     pass
@@ -217,6 +254,14 @@ def sql_find(db, data, command):
     cur.execute(command, (data,))
     results = cur.fetchone()
     return results[0]
+
+
+def sql_findall(db, data, command):
+    con = lite.connect(db)
+    cur = con.cursor()
+    cur.execute(command, (data,))
+    results = cur.fetchall()
+    return results
 
 
 def output_response(response):
