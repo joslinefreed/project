@@ -29,6 +29,7 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
     selectedStockHeader = None
     selectedCustomerHeader = None
     selectedHeaderHeader = None
+    orderNumber = None
 
     db = 'Book Selling Database.db'
 
@@ -219,17 +220,15 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
     def headerVerticalHeaderSectionClicked(self, logicalindex: int):
         linesTable: QTableWidget = self.findLinesTable()
         headersTable: QTableWidget = self.findHeadersTable()
-        #find Order Number
-        #orderNumber = datalayer.findOrderNumber(logicalindex)
+        # find Order Number
+        # orderNumber = datalayer.findOrderNumber(logicalindex)
 
-        orderNumber = headersTable.item(logicalindex, 3).text()
-        print(orderNumber)
+        self.orderNumber = headersTable.item(logicalindex, 3).text()
         # repeat the function for each column
-        bookName = datalayer.OrderBookName(self.db, orderNumber)
+        bookName = datalayer.OrderBookName(self.db, self.orderNumber)
         self.refreshColumn(bookName, 0, linesTable, 200)
 
-        quantity = datalayer.OrderQuantity(self.db, orderNumber)
-        print(quantity)
+        quantity = datalayer.OrderQuantity(self.db, self.orderNumber)
         self.refreshColumn(quantity, 1, linesTable, 100, True)
 
         '''lineCost = datalayer.OrderLineCost(self.db)
@@ -244,7 +243,11 @@ class FirstWindow(QtWidgets.QMainWindow, win1):
         return table
 
     def addLines(self):
-        pass
+        order_dialog = orderdialog.LineDialog(self.orderNumber)
+        if self.orderNumber is not None:
+            order_dialog.exec_()
+        else:
+            pass
 
     def searchOrders(self):
         pass

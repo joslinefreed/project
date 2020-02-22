@@ -187,6 +187,16 @@ def OrderQuantity(db, orderNumber):
     return results
 
 
+def findStockCode(db, name):
+    sql = '''
+    SELECT StockID
+    FROM Stock
+    WHERE Title = ?
+    '''
+    results = sql_find(db, name, sql)
+    return results
+
+
 def findCustomerID(db, name):
     sql = '''
     SELECT CustomerID
@@ -217,6 +227,14 @@ def AddHeaderDetails(db, data):
     sql = '''
     INSERT INTO OrderHeader (CustomerID, DeliveryAddress, DeliveryCharge, OrderDate)
     VALUES(?, ?, ?, ?)'''
+    sql_add(db, data, sql)
+    pass
+
+
+def AddLineDetails(db, data):
+    sql = '''
+    INSERT INTO OrderLines (OrderNumber, StockCode, Quantity)
+    VALUES(?, ?, ?)'''
     sql_add(db, data, sql)
     pass
 
