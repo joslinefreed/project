@@ -1,6 +1,50 @@
 import sqlite3 as lite
 
 
+def StockTitle(db, sort=False):
+    sql = '''
+    SELECT Title
+    FROM Stock
+    '''
+
+    if (sort):
+        sql = '''
+        SELECT Title 
+        FROM Stock
+        ORDER BY 1
+        '''
+
+    results = sql_command(db, sql)
+    return results
+
+
+def StockAuthor(db):
+    sql = '''
+    SELECT Author
+    FROM Stock
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def StockListPrice(db):
+    sql = '''
+    SELECT ListPrice
+    FROM Stock
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
+def StockQuantity(db):
+    sql = '''
+    SELECT Quantity
+    FROM Stock
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
 def CustomerDetails(db):
     sql = '''
     SELECT Name, Email, Tel, Address, Discount  
@@ -73,38 +117,11 @@ def CustomerDiscount(db):
     #return discounts
 
 
-def StockTitle(db):
+def CustomerTotalSpent(db):
     sql = '''
-    SELECT Title
-    FROM Stock
-    '''
-    results = sql_command(db, sql)
-    return results
-
-
-def StockAuthor(db):
-    sql = '''
-    SELECT Author
-    FROM Stock
-    '''
-    results = sql_command(db, sql)
-    return results
-
-
-def StockListPrice(db):
-    sql = '''
-    SELECT ListPrice
-    FROM Stock
-    '''
-    results = sql_command(db, sql)
-    return results
-
-
-def StockQuantity(db):
-    sql = '''
-    SELECT Quantity
-    FROM Stock
-    '''
+        SELECT TotalSpent
+        FROM Customer
+        '''
     results = sql_command(db, sql)
     return results
 
@@ -156,6 +173,15 @@ def OrderDate(db):
     return results
 
 
+def OrderCost(db):
+    sql = '''
+    SELECT TotalCost
+    FROM OrderHeader
+    '''
+    results = sql_command(db, sql)
+    return results
+
+
 def OrderNumber(db):
     sql = '''
     SELECT OrderNumber
@@ -187,6 +213,16 @@ def OrderQuantity(db, orderNumber):
     return results
 
 
+def OrderLineCost(db, orderNumber):
+    sql = '''
+    SELECT LinePrice
+    FROM OrderLines
+    WHERE OrderNumber = ?
+    '''
+    results = sql_findall(db, orderNumber, sql)
+    return results
+
+
 def findStockCode(db, name):
     sql = '''
     SELECT StockID
@@ -204,6 +240,16 @@ def findCustomerID(db, name):
     WHERE Name = ?
     '''
     results = sql_find(db, name, sql)
+    return results
+
+
+def findStockPrice(db, data):
+    sql = '''
+    SELECT ListPrice
+    FROM Stock
+    WHERE StockID = ?
+    '''
+    results = sql_find(db, data, sql)
     return results
 
 
@@ -233,17 +279,13 @@ def AddHeaderDetails(db, data):
 
 def AddLineDetails(db, data):
     sql = '''
-    INSERT INTO OrderLines (OrderNumber, StockCode, Quantity)
-    VALUES(?, ?, ?)'''
+    INSERT INTO OrderLines (OrderNumber, StockCode, Quantity, LinePrice)
+    VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
     pass
 
 
-def AddStockDetails(db, data):
-    sql = '''
-    INSERT INTO Stock (Title, Author, ListPrice, Quantity)
-    VALUES(?, ?, ?, ?)'''
-    sql_add(db, data, sql)
+def CalculateOrderLines(db, data):
     pass
 
 

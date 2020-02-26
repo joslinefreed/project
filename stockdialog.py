@@ -1,40 +1,33 @@
-import sys
-
-from PyQt5.QtGui import QFocusEvent
-from PyQt5.uic.properties import QtGui
-
 import datalayer
-import window
 
-from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QDialog, QPushButton, QPlainTextEdit, \
-    QDialogButtonBox
-
-dialog1 = uic.loadUiType("StockAdd.ui")[0]
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QPlainTextEdit
+stockAddDialog = uic.loadUiType("StockAdd.ui")[0]
+db = 'Book Selling Database.db'
 
 
-class StockDialog(QtWidgets.QDialog, dialog1):
+class StockDialog(QtWidgets.QDialog, stockAddDialog):
     def __init__(self, parent=None):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
 
     def findData(self) -> QPlainTextEdit:
 
-        # convert text boxes to variables
-
+        # if blank enter None
         def setvaribles(text):
             if text != '':
                 return text
             else:
                 return None
 
+        # convert text boxes to variables
         title = setvaribles(self.titleTextEdit.toPlainText())
         author = setvaribles(self.authorTextEdit.toPlainText())
         listPrice = setvaribles(self.listPriceTextEdit.toPlainText())
         quantity = setvaribles(self.quantityTextEdit.toPlainText())
         data = (title, author, listPrice, quantity)
+
         # find database
-        db = 'Book Selling Database.db'
         datalayer.AddStockDetails(db, data)
         pass
 
