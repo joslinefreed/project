@@ -253,6 +253,16 @@ def findStockPrice(db, data):
     return results
 
 
+def findDiscount(db, name):
+    sql = '''
+    SELECT Discount
+    FROM Customer
+    WHERE Name = ?
+    '''
+    results = sql_find(db, name, sql)
+    return results
+
+
 def AddCustomerDetails(db, data):
     sql = '''
     INSERT INTO Customer (Name, Email, Tel, Address, Discount)
@@ -271,8 +281,8 @@ def AddStockDetails(db, data):
 
 def AddHeaderDetails(db, data):
     sql = '''
-    INSERT INTO OrderHeader (CustomerID, DeliveryAddress, DeliveryCharge, OrderDate)
-    VALUES(?, ?, ?, ?)'''
+    INSERT INTO OrderHeader (CustomerID, DeliveryAddress, DeliveryCharge, OrderDate, TotalCost)
+    VALUES(?, ?, ?, ?, ?)'''
     sql_add(db, data, sql)
     pass
 
@@ -285,7 +295,16 @@ def AddLineDetails(db, data):
     pass
 
 
-def CalculateOrderLines(db, data):
+def UpdateOrderCost(db, orderNumber):
+    sql = '''
+    UPDATE OrderHeader
+    SET TotalCost =(
+    OrderHeader.DeliveryCharge +(
+    SELECT SUM(OrderLines.LinePrice) FROM OrderLines WHERE OrderLines.OrderNumber = ?))
+    WHERE OrderNumber.OrderNumber = ?
+    '''
+    values = (orderNumber, orderNumber)
+    sql_update(db, values, sql)
     pass
 
 
@@ -324,6 +343,36 @@ def sql_findall(db, data, command):
     return results
 
 
+def sql_update(db, data, command):
+    con = lite.connect(db)
+    with con:
+        cur = con.cursor()
+        cur.execute(command, (data,))
+        print("excuted")
+        con.commit()
+    pass
+
+
 def output_response(response):
     for row in response:
         print('\t'.join([str(x) for x in row]))
+
+
+
+'''update OrderHeader
+set TotalCost =(
+OrderHeader.DeliveryCharge +(
+SELECT sum(OrderLines.LinePrice) from OrderLines where OrderLines.OrderNumber = OrderHeader.OrderNumber)
+)'''
+
+'''    update OrderHeader
+    set TotalCost =(
+    OrderHeader.DeliveryCharge +(
+    SELECT sum(OrderLines.LinePrice) from OrderLines where OrderLines.OrderNumber = OrderHeader.OrderNumber)
+    where OrderHeader.OrderNumber = ?
+    
+update OrderHeader
+set TotalCost =(
+OrderHeader.DeliveryCharge +(
+SELECT sum(OrderLines.LinePrice) from OrderLines where OrderLines.OrderNumber = OrderHeader.OrderNumber)
+)'''

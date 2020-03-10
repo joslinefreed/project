@@ -1,9 +1,8 @@
-from PyQt5.QtCore import QDate
 
 import datalayer
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QPlainTextEdit, QComboBox
+from PyQt5.QtWidgets import QComboBox
 
 
 linesAddDialog = uic.loadUiType("LinesAdd.ui")[0]
@@ -11,11 +10,12 @@ db = 'Book Selling Database.db'
 
 
 class LineDialog(QtWidgets.QDialog, linesAddDialog):
-    def __init__(self, number, parent=None):
+    def __init__(self, number, name, parent=None):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
 
         self.orderNumber = number
+        self.customerName = name
 
         lineResults = datalayer.StockTitle(db, True)
         comboBox: QComboBox = self.bookTitleComboBox
@@ -34,12 +34,21 @@ class LineDialog(QtWidgets.QDialog, linesAddDialog):
 
         stockPrice = datalayer.findStockPrice(db, stockCode)
 
-        linePrice = stockPrice*quantity
+        discount = datalayer.findDiscount(db, self.customerName)
+
+        if discount is None:
+            discount = 1
+        else:
+            discount = 1-(discount/100)
+
+        print("got here")
+        linePrice = float("{0:.2f}".format(stockPrice*quantity*discount))
 
         data = (self.orderNumber, stockCode, quantity, linePrice)
 
         # find database
         datalayer.AddLineDetails(db, data)
+        datalayer.UpdateOrderCost(db, self.orderNumber)
         pass
 
     def accept(self):

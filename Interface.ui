@@ -116,7 +116,7 @@ font: 12pt &quot;Calibri&quot;;</string>
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="searchStockButton">
+     <widget class="QPushButton" name="saveStockButton">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -130,7 +130,7 @@ font: 12pt &quot;Calibri&quot;;</string>
 font: 12pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
-       <string>Search</string>
+       <string>Save</string>
       </property>
      </widget>
     </widget>
@@ -221,7 +221,7 @@ font: 12pt &quot;Calibri&quot;;</string>
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="searchCustomerButton">
+     <widget class="QPushButton" name="saveCustomerButton">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -235,7 +235,7 @@ font: 12pt &quot;Calibri&quot;;</string>
 font: 12pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
-       <string>Search</string>
+       <string>Save</string>
       </property>
      </widget>
     </widget>
@@ -380,7 +380,7 @@ font: 12pt &quot;Calibri&quot;;</string>
        <string>Refresh</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="searchOrders">
+     <widget class="QPushButton" name="saveOrdersButton">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -394,7 +394,7 @@ font: 12pt &quot;Calibri&quot;;</string>
 font: 12pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
-       <string>Search</string>
+       <string>Save</string>
       </property>
      </widget>
      <widget class="QPushButton" name="addLinesButton">
@@ -412,6 +412,19 @@ font: 12pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
        <string>Add Line</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="clickHeaderLabel">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>220</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Click an Order Header so see lines</string>
       </property>
      </widget>
     </widget>
@@ -490,7 +503,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
     </widget>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOrders">
    <property name="text">
     <string>Orders</string>
@@ -677,7 +689,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
    </hints>
   </connection>
   <connection>
-   <sender>searchStockButton</sender>
+   <sender>saveStockButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>searchStock()</slot>
@@ -693,7 +705,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
    </hints>
   </connection>
   <connection>
-   <sender>searchCustomerButton</sender>
+   <sender>saveCustomerButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>searchCustomers()</slot>
@@ -709,7 +721,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
    </hints>
   </connection>
   <connection>
-   <sender>searchOrders</sender>
+   <sender>saveOrdersButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>searchStock()</slot>

@@ -3,7 +3,7 @@ from PyQt5.QtCore import QDate
 import datalayer
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QPlainTextEdit, QComboBox
+from PyQt5.QtWidgets import QComboBox
 
 headerAddDialog = uic.loadUiType("HeaderAdd.ui")[0]
 db = 'Book Selling Database.db'
@@ -24,14 +24,14 @@ class HeaderDialog(QtWidgets.QDialog, headerAddDialog):
         # set the order date to today's date
         self.orderDateEdit.setDate(QDate.currentDate())
 
-    def findData(self) -> QPlainTextEdit:
+    def findData(self):
         # convert text boxes to variables
 
         def setvaribles(text):
             if text != '':
                 return text
             else:
-                return None
+                return 0
 
         customerName = self.customerNameComboBox.currentText()
         customerID = datalayer.findCustomerID(db, customerName)
@@ -40,7 +40,8 @@ class HeaderDialog(QtWidgets.QDialog, headerAddDialog):
         deliveryCharge = setvaribles(self.deliveryChargeTextEdit.toPlainText())
         # change orderDate into date format
         orderDate = self.orderDateEdit.date().toPyDate()
-        data = (customerID, deliveryAddress, deliveryCharge, orderDate)
+        orderCost = deliveryCharge
+        data = (customerID, deliveryAddress, deliveryCharge, orderDate, orderCost)
 
         # find database
         datalayer.AddHeaderDetails(db, data)
