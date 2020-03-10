@@ -67,7 +67,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         customer_header: QHeaderView = customer_table.horizontalHeader()
         customer_header.sectionClicked.connect(self.headerSectionClicked)
 
-        # Get the header view from the stock table and connect it for when the section is clicked
+        # Get the header view from the headers table and connect it for when the section is clicked
         headers_table: QTableWidget = self.findHeadersTable()
         headers_horizontal_header: QHeaderView = headers_table.horizontalHeader()
         headers_horizontal_header.sectionClicked.connect(self.headerSectionClicked)
@@ -140,35 +140,35 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         # Find the relevant table and selected header
         if self.currentTab == 0:
             table: QTableWidget = self.findStockTable()
-            selectedHeader = self.selectedHeader[0]
+            selected_header = self.selectedHeader[0]
         elif self.currentTab == 1:
             table: QTableWidget = self.findCustomerTable()
-            selectedHeader = self.selectedHeader[1]
+            selected_header = self.selectedHeader[1]
         elif self.currentTab == 2:
             table: QTableWidget = self.findHeadersTable()
-            selectedHeader = self.selectedHeader[2]
+            selected_header = self.selectedHeader[2]
 
         header: QHeaderView = table.horizontalHeader()
 
         # Check if the table is currently sorted in ascending order and if so sort in descending order
-        if selectedHeader != logicalindex:
+        if selected_header != logicalindex:
             table.sortItems(logicalindex, QtCore.Qt.AscendingOrder)
             # Change indicator on the header
             header.setSortIndicator(logicalindex, QtCore.Qt.AscendingOrder)
             # set selectedHeader to the new selected header index
-            selectedHeader = logicalindex
+            selected_header = logicalindex
         else:
             table.sortItems(logicalindex, QtCore.Qt.DescendingOrder)
             # Change indicator on the header
             header.setSortIndicator(logicalindex, QtCore.Qt.DescendingOrder)
             # reset selectedHeader as the column is currently sorted in descending order
-            selectedHeader = None
+            selected_header = None
 
         # show indicator so clear it is clear to the user how it is sorted
         header.setSortIndicatorShown(True)
 
         # return the update selected header
-        self.selectedHeader[self.currentTab] = selectedHeader
+        self.selectedHeader[self.currentTab] = selected_header
 
     def findStockTable(self) -> QTableWidget:
 
@@ -197,6 +197,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         self.refreshColumn(quantity, 3, table, 50, True)
 
         header.setSortIndicatorShown(False)
+        self.selectedHeader[self.currentTab] = None
 
     def addStock(self):
 
@@ -237,6 +238,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         self.refreshColumn(totalSpent, 5, table, 50, True, True)
 
         header.setSortIndicatorShown(False)
+        self.selectedHeader[self.currentTab] = None
 
     def addCustomer(self):
 
@@ -278,12 +280,12 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         self.refreshColumn(orderNumber, 5, headerTable, 0)
 
         header.setSortIndicatorShown(False)
+        self.selectedHeader[self.currentTab] = None
 
         while orderTable.rowCount() > 0:
             orderTable.removeRow(0)
 
         self.clickHeaderLabel.show()
-
 
     def addHeader(self):
 
