@@ -22,14 +22,22 @@ class CustomerDialog(QtWidgets.QDialog, customerAddDialog):
             else:
                 return None
 
+        def setnumber(text):
+            if text != '':
+                return text
+            else:
+                return 0
+
         # convert text boxes to variables
-        name = self.nameTextEdit.toPlainText()
-        email = setvaribles(self.emailTextEdit.toPlainText())
-        tel = setvaribles(self.telTextEdit.toPlainText())
-        address = setvaribles(self.addressTextEdit.toPlainText())
-        discount = setvaribles(self.discountTextEdit.toPlainText())
-        data = (name, email, tel, address, discount)
-        # find database
+        name = self.nameLineEdit.text()
+        email = setvaribles(self.emailLineEdit.text())
+        tel = setvaribles(self.telLineEdit.text())
+        address = setvaribles(self.addressLineEdit.text())
+        discount = setnumber(self.discountLineEdit.text())
+        totalspent = 0
+        data = (name, email, tel, address, discount, totalspent)
+
+        # add into database
         datalayer.AddCustomerDetails(db, data)
         pass
 

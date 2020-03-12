@@ -10,7 +10,9 @@ import headerdialog
 import linedialog
 
 from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView, QLabel
+from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView
+
+import stockupdate
 
 win1 = uic.loadUiType("Interface.ui")[0]
 db = 'Book Selling Database.db'
@@ -72,10 +74,13 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         headers_horizontal_header: QHeaderView = headers_table.horizontalHeader()
         headers_horizontal_header.sectionClicked.connect(self.headerSectionClicked)
         headers_vertical_header: QHeaderView = headers_table.verticalHeader()
-        headers_vertical_header.sectionClicked.connect(self.headerVerticalHeaderSectionClicked)
+        headers_vertical_header.sectionClicked.connect(self.verticalHeaderSectionClicked)
+
+        lines_table: QTableWidget = self.findLinesTable()
+        lines_header: QHeaderView = lines_table.horizontalHeader()
+        lines_header.sectionClicked.connect(self.headerSectionClicked)
 
     def loginCancelled(self):
-        print("loginCancelled")
         app = QtWidgets.QApplication(sys.argv)
         app.exec_()
 
@@ -131,8 +136,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
                 row_index = row_index + 1
 
     def getPrice(self, number):
-        price = float("{0:.2f}".format(number))
-        price = str(price)
+        price = str("{0:.2f}".format(number))
         return price
 
     def headerSectionClicked(self, logicalindex: int):
@@ -206,7 +210,10 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         stock_dialog.exec_()
         self.refreshStock()
 
-    def searchStock(self):
+    def updateStock(self):
+        stock_update = stockupdate.StockUpdate()
+        stock_update.exec_()
+        self.refreshStock()
         pass
 
     def findCustomerTable(self) -> QTableWidget:
@@ -257,7 +264,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         table: QTableWidget = orders_tab.findChild(QTableWidget, "headersTable")
         return table
 
-    def refreshHeader(self):
+    def refreshHeader(self, lines=False):
         # Find the stock table widget
         headerTable: QTableWidget = self.findHeadersTable()
         orderTable: QTableWidget = self.findLinesTable()
@@ -282,19 +289,25 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         header.setSortIndicatorShown(False)
         self.selectedHeader[self.currentTab] = None
 
-        while orderTable.rowCount() > 0:
-            orderTable.removeRow(0)
-
-        self.clickHeaderLabel.show()
+        # only clear lines if refresh button is clicked
+        if lines:
+            pass
+        else:
+            while orderTable.rowCount() > 0:
+                orderTable.removeRow(0)
+            self.clickHeaderLabel.show()
+            pass
 
     def addHeader(self):
 
         # Open add header dialog and then refresh header
         header_dialog = headerdialog.HeaderDialog()
         header_dialog.exec_()
+        customerID = header_dialog.customerID
         self.refreshHeader()
+        datalayer.UpdateTotalSpent(db, customerID)
 
-    def headerVerticalHeaderSectionClicked(self, logicalindex: int):
+    def verticalHeaderSectionClicked(self, logicalindex: int):
         headersTable: QTableWidget = self.findHeadersTable()
 
         # find Order Number that has been selected
@@ -332,6 +345,12 @@ class MainWindow(QtWidgets.QMainWindow, win1):
             line_dialog = linedialog.LineDialog(self.selectedOrderNumber, self.selectedCustomerName)
             line_dialog.exec_()
             self.refreshOrderLines()
+
+            customerID = datalayer.findCustomerID(db, self.selectedCustomerName)
+
+            # call refresh header but dont clear lines table
+            self.refreshHeader(True)
+            datalayer.UpdateTotalSpent(db, customerID)
         else:
             pass
 

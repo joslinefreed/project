@@ -1,93 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>addCustomer</class>
- <widget class="QDialog" name="addCustomer">
+ <class>updateStock</class>
+ <widget class="QDialog" name="updateStock">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>445</width>
-    <height>95</height>
+    <width>447</width>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add Customer</string>
+   <string>Update Stock</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(203, 235, 255);</string>
+   <string notr="true">background-color:rgb(203, 235, 255);</string>
   </property>
-  <widget class="QLabel" name="nameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>35</width>
-     <height>10</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Name:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="addressLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>35</width>
-     <height>10</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Address:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="telLabel">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>10</y>
-     <width>35</width>
-     <height>10</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Tel:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="emailLabel">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>10</y>
-     <width>35</width>
-     <height>10</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Email:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="discountLabel">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>50</y>
-     <width>35</width>
-     <height>10</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Discount:</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="acceptButton">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>21</y>
+     <x>370</x>
+     <y>20</y>
      <width>61</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -101,8 +36,8 @@ font: 10pt &quot;Calibri&quot;;</string>
   <widget class="QPushButton" name="rejectButton">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>47</y>
+     <x>370</x>
+     <y>50</y>
      <width>61</width>
      <height>21</height>
     </rect>
@@ -115,38 +50,64 @@ font: 10pt &quot;Calibri&quot;;</string>
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="nameLineEdit">
+  <widget class="QLabel" name="titleLabel">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
-     <width>101</width>
-     <height>21</height>
+     <y>10</y>
+     <width>35</width>
+     <height>10</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <property name="text">
+    <string>Title:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="emailLineEdit">
+  <widget class="QLabel" name="authorLabel">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>20</y>
-     <width>101</width>
-     <height>21</height>
+     <x>10</x>
+     <y>50</y>
+     <width>35</width>
+     <height>10</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <property name="text">
+    <string>Author:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="telLineEdit">
+  <widget class="QLabel" name="listPriceLabel">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>10</y>
+     <width>35</width>
+     <height>10</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>List Price:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="quantityLabel">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>50</y>
+     <width>35</width>
+     <height>10</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quantity:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="listPriceLineEdit">
    <property name="geometry">
     <rect>
      <x>230</x>
      <y>20</y>
-     <width>101</width>
+     <width>121</width>
      <height>21</height>
     </rect>
    </property>
@@ -154,12 +115,12 @@ font: 10pt &quot;Calibri&quot;;</string>
     <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="addressLineEdit">
+  <widget class="QLineEdit" name="authorLineEdit">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>211</width>
+     <width>201</width>
      <height>21</height>
     </rect>
    </property>
@@ -167,12 +128,25 @@ font: 10pt &quot;Calibri&quot;;</string>
     <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="discountLineEdit">
+  <widget class="QLineEdit" name="quantityLineEdit">
    <property name="geometry">
     <rect>
      <x>230</x>
      <y>60</y>
-     <width>101</width>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="titleComboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>201</width>
      <height>21</height>
     </rect>
    </property>
@@ -184,36 +158,55 @@ font: 10pt &quot;Calibri&quot;;</string>
  <resources/>
  <connections>
   <connection>
-   <sender>rejectButton</sender>
+   <sender>acceptButton</sender>
    <signal>clicked()</signal>
-   <receiver>addCustomer</receiver>
-   <slot>reject()</slot>
+   <receiver>updateStock</receiver>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>377</x>
-     <y>51</y>
+     <x>394</x>
+     <y>28</y>
     </hint>
     <hint type="destinationlabel">
-     <x>348</x>
-     <y>46</y>
+     <x>359</x>
+     <y>13</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>acceptButton</sender>
+   <sender>rejectButton</sender>
    <signal>clicked()</signal>
-   <receiver>addCustomer</receiver>
-   <slot>accept()</slot>
+   <receiver>updateStock</receiver>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
+     <x>375</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>titleComboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>updateStock</receiver>
+   <slot>refreshLineEdits(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
      <y>33</y>
     </hint>
     <hint type="destinationlabel">
-     <x>346</x>
-     <y>11</y>
+     <x>195</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>refreshLineEdits(QString)</slot>
+ </slots>
 </ui>

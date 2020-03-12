@@ -10,6 +10,9 @@ db = 'Book Selling Database.db'
 
 
 class HeaderDialog(QtWidgets.QDialog, headerAddDialog):
+
+    customerID = None
+
     def __init__(self, parent=None):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
@@ -27,21 +30,29 @@ class HeaderDialog(QtWidgets.QDialog, headerAddDialog):
     def findData(self):
         # convert text boxes to variables
 
-        def setvaribles(text):
+        def setnumber(text):
             if text != '':
                 return text
             else:
                 return 0
 
-        customerName = self.customerNameComboBox.currentText()
-        customerID = datalayer.findCustomerID(db, customerName)
+        def setaddress(text):
+            if text != '':
+                return text
+            else:
+                text = datalayer.findAddress(db, self.customerID)
+                return text
 
-        deliveryAddress = self.deliveryAddressTextEdit.toPlainText()
-        deliveryCharge = setvaribles(self.deliveryChargeTextEdit.toPlainText())
+        customerName = self.customerNameComboBox.currentText()
+        self.customerID = datalayer.findCustomerID(db, customerName)
+
+        deliveryAddress = setaddress(self.deliveryAddressLineEdit.text())
+        deliveryCharge = setnumber(self.deliveryChargeLineEdit.text())
         # change orderDate into date format
         orderDate = self.orderDateEdit.date().toPyDate()
+        print(orderDate)
         orderCost = deliveryCharge
-        data = (customerID, deliveryAddress, deliveryCharge, orderDate, orderCost)
+        data = (self.customerID, deliveryAddress, deliveryCharge, orderDate, orderCost)
 
         # find database
         datalayer.AddHeaderDetails(db, data)

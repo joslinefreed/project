@@ -16,45 +16,6 @@
   <property name="styleSheet">
    <string notr="true">background-color:rgb(203, 235, 255);</string>
   </property>
-  <widget class="QPlainTextEdit" name="titleTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>201</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="authorTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>60</y>
-     <width>201</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="quantityTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>60</y>
-     <width>121</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="acceptButton">
    <property name="geometry">
     <rect>
@@ -87,19 +48,6 @@ font: 10pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
     <string>Cancel</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="listPriceTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>20</y>
-     <width>121</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
   <widget class="QLabel" name="titleLabel">
@@ -152,6 +100,58 @@ font: 10pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
     <string>Qauntity:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="titleLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="listPriceLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>20</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="authorLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="quantityLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>60</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
  </widget>

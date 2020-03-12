@@ -68,32 +68,6 @@
     <string>Order Date:</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="deliveryChargeTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>20</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="deliveryAddressTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>60</y>
-     <width>211</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="acceptButton">
    <property name="geometry">
     <rect>
@@ -148,6 +122,32 @@ font: 10pt &quot;Calibri&quot;;</string>
      <y>60</y>
      <width>110</width>
      <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="deliveryChargeLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>20</y>
+     <width>111</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="deliveryAddressLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>211</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">

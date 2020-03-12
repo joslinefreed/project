@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
+    <width>588</width>
     <height>359</height>
    </rect>
   </property>
@@ -116,7 +116,7 @@ font: 12pt &quot;Calibri&quot;;</string>
        <string>Add</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="saveStockButton">
+     <widget class="QPushButton" name="updateStockButton">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -130,7 +130,7 @@ font: 12pt &quot;Calibri&quot;;</string>
 font: 12pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
-       <string>Save</string>
+       <string>Update Stock</string>
       </property>
      </widget>
     </widget>
@@ -481,7 +481,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Click the Add button on each tab to add new data into the table.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- To view or add Odrer Lines, first select the relevant Order Header.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- To view or add Order Lines, first select the relevant Order Header.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="exitHelpButton">
@@ -619,7 +619,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>86</y>
     </hint>
     <hint type="destinationlabel">
-     <x>587</x>
+     <x>506</x>
      <y>53</y>
     </hint>
    </hints>
@@ -635,7 +635,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>587</x>
+     <x>506</x>
      <y>112</y>
     </hint>
    </hints>
@@ -651,7 +651,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>588</x>
+     <x>506</x>
      <y>29</y>
     </hint>
    </hints>
@@ -667,7 +667,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
-     <x>549</x>
+     <x>506</x>
      <y>22</y>
     </hint>
    </hints>
@@ -689,22 +689,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
    </hints>
   </connection>
   <connection>
-   <sender>saveStockButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>searchStock()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>530</x>
-     <y>157</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>588</x>
-     <y>184</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>saveCustomerButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -715,24 +699,8 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>162</y>
     </hint>
     <hint type="destinationlabel">
-     <x>591</x>
+     <x>506</x>
      <y>225</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>saveOrdersButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>searchStock()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>542</x>
-     <y>204</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>591</x>
-     <y>213</y>
     </hint>
    </hints>
   </connection>
@@ -747,7 +715,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>168</y>
     </hint>
     <hint type="destinationlabel">
-     <x>586</x>
+     <x>506</x>
      <y>177</y>
     </hint>
    </hints>
@@ -763,7 +731,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
      <y>127</y>
     </hint>
     <hint type="destinationlabel">
-     <x>590</x>
+     <x>506</x>
      <y>137</y>
     </hint>
    </hints>
@@ -784,6 +752,22 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>updateStockButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStock()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>526</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>587</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refreshCustomers()</slot>
@@ -792,12 +776,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.0223464, y2:1, st
   <slot>addStock()</slot>
   <slot>help()</slot>
   <slot>closeHelp()</slot>
-  <slot>searchStock()</slot>
   <slot>searchCustomers()</slot>
   <slot>addHeader()</slot>
   <slot>searchOrders()</slot>
   <slot>addLines()</slot>
   <slot>refreshHeader()</slot>
   <slot>refreshTab(int)</slot>
+  <slot>updateStock()</slot>
  </slots>
 </ui>

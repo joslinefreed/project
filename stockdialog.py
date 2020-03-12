@@ -20,11 +20,17 @@ class StockDialog(QtWidgets.QDialog, stockAddDialog):
             else:
                 return None
 
+        def setnumbers(text):
+            if text != '':
+                return text
+            else:
+                return 0
+
         # convert text boxes to variables
-        title = setvaribles(self.titleTextEdit.toPlainText())
-        author = setvaribles(self.authorTextEdit.toPlainText())
-        listPrice = setvaribles(self.listPriceTextEdit.toPlainText())
-        quantity = setvaribles(self.quantityTextEdit.toPlainText())
+        title = self.titleLineEdit.text()
+        author = setvaribles(self.authorLineEdit.text())
+        listPrice = setnumbers(self.listPriceLineEdit.text())
+        quantity = setnumbers(self.quantityLineEdit.text())
         data = (title, author, listPrice, quantity)
 
         # find database

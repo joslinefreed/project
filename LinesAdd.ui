@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>445</width>
-    <height>78</height>
+    <height>90</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>15</y>
+     <y>25</y>
      <width>40</width>
      <height>10</height>
     </rect>
@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>15</y>
+     <y>25</y>
      <width>65</width>
      <height>10</height>
     </rect>
@@ -42,24 +42,11 @@
     <string>Quantity:</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="quantityTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>30</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="acceptButton">
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>14</y>
+     <y>24</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -76,7 +63,7 @@ font: 10pt &quot;Calibri&quot;;</string>
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>40</y>
+     <y>50</y>
      <width>61</width>
      <height>21</height>
     </rect>
@@ -93,13 +80,42 @@ font: 10pt &quot;Calibri&quot;;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>30</y>
+     <y>40</y>
      <width>211</width>
      <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="quantityLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>40</y>
+     <width>113</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="invalidStock">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>5</y>
+     <width>201</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Sorry, there is not enough of this stock available</string>
    </property>
   </widget>
  </widget>

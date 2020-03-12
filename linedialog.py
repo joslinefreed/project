@@ -14,7 +14,8 @@ class LineDialog(QtWidgets.QDialog, linesAddDialog):
         QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
 
-        self.orderNumber = number
+        self.invalidStock.hide()
+        self.orderNumber = int(number)
         self.customerName = name
 
         lineResults = datalayer.StockTitle(db, True)
@@ -30,7 +31,7 @@ class LineDialog(QtWidgets.QDialog, linesAddDialog):
         bookTitle = self.bookTitleComboBox.currentText()
         stockCode = datalayer.findStockCode(db, bookTitle)
 
-        quantity = int(self.quantityTextEdit.toPlainText())
+        quantity = int(self.quantityLineEdit.text())
 
         stockPrice = datalayer.findStockPrice(db, stockCode)
 
@@ -41,14 +42,14 @@ class LineDialog(QtWidgets.QDialog, linesAddDialog):
         else:
             discount = 1-(discount/100)
 
-        print("got here")
         linePrice = float("{0:.2f}".format(stockPrice*quantity*discount))
 
         data = (self.orderNumber, stockCode, quantity, linePrice)
 
+        datalayer.UpdateOrderCost(db, self.orderNumber)
         # find database
         datalayer.AddLineDetails(db, data)
-        datalayer.UpdateOrderCost(db, self.orderNumber)
+        datalayer.ReduceQuantity(db, str(quantity), stockCode)
         pass
 
     def accept(self):
