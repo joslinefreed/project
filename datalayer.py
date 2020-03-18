@@ -1,13 +1,13 @@
 import sqlite3 as lite
 
 
-def StockTitle(db, sort=False):
+def stock_title(db, sort=False):
     sql = '''
     SELECT Title
     FROM Stock
     '''
 
-    if (sort):
+    if sort:
         sql = '''
         SELECT Title 
         FROM Stock
@@ -18,7 +18,7 @@ def StockTitle(db, sort=False):
     return results
 
 
-def StockAuthor(db):
+def stock_author(db):
     sql = '''
     SELECT Author
     FROM Stock
@@ -27,7 +27,7 @@ def StockAuthor(db):
     return results
 
 
-def StockListPrice(db):
+def stock_list_price(db):
     sql = '''
     SELECT ListPrice
     FROM Stock
@@ -36,7 +36,7 @@ def StockListPrice(db):
     return results
 
 
-def StockQuantity(db):
+def stock_quantity(db):
     sql = '''
     SELECT Quantity
     FROM Stock
@@ -45,7 +45,7 @@ def StockQuantity(db):
     return results
 
 
-def CustomerDetails(db):
+def customer_details(db):
     sql = '''
     SELECT Name, Email, Tel, Address, Discount  
     FROM Customer
@@ -54,7 +54,7 @@ def CustomerDetails(db):
     return results
 
 
-def CustomerName(db, sort=False):
+def customer_name(db, sort=False):
     sql = '''
     SELECT Name 
     FROM Customer
@@ -71,7 +71,7 @@ def CustomerName(db, sort=False):
     return results
 
 
-def CustomerEmail(db):
+def customer_email(db):
     sql = '''
     SELECT Email
     FROM Customer
@@ -80,7 +80,7 @@ def CustomerEmail(db):
     return results
 
 
-def CustomerTel(db):
+def customer_tel(db):
     sql = '''
     SELECT Tel
     FROM Customer
@@ -89,7 +89,7 @@ def CustomerTel(db):
     return results
 
 
-def CustomerAddress(db):
+def customer_address(db):
     sql = '''
     SELECT Address
     FROM Customer
@@ -98,7 +98,7 @@ def CustomerAddress(db):
     return results
 
 
-def CustomerDiscount(db):
+def customer_discount(db):
     sql = '''
     SELECT Discount
     FROM Customer
@@ -107,7 +107,7 @@ def CustomerDiscount(db):
     return results
 
 
-def CustomerTotalSpent(db):
+def customer_total_spent(db):
     sql = '''
         SELECT TotalSpent
         FROM Customer
@@ -116,7 +116,7 @@ def CustomerTotalSpent(db):
     return results
 
 
-def OrderCustomer(db):
+def order_customer(db):
     sql = '''
     SELECT CustomerID
     FROM OrderHeader
@@ -125,7 +125,7 @@ def OrderCustomer(db):
     return results
 
 
-def OrderCustomerName(db):
+def order_customer_name(db):
     sql = '''
     SELECT Customer.Name
     FROM OrderHeader
@@ -136,7 +136,7 @@ def OrderCustomerName(db):
     return results
 
 
-def OrderDeliveryAddress(db):
+def order_delivery_address(db):
     sql = '''
     SELECT DeliveryAddress
     FROM OrderHeader
@@ -145,7 +145,7 @@ def OrderDeliveryAddress(db):
     return results
 
 
-def OrderDeliveryCharge(db):
+def order_delivery_charge(db):
     sql = '''
     SELECT DeliveryCharge
     FROM OrderHeader
@@ -154,7 +154,7 @@ def OrderDeliveryCharge(db):
     return results
 
 
-def OrderDate(db):
+def order_date(db):
     sql = '''
     SELECT OrderDate
     FROM OrderHeader
@@ -163,7 +163,7 @@ def OrderDate(db):
     return results
 
 
-def OrderCost(db):
+def order_cost(db):
     sql = '''
     SELECT TotalCost
     FROM OrderHeader
@@ -172,7 +172,7 @@ def OrderCost(db):
     return results
 
 
-def OrderNumber(db):
+def order_number(db):
     sql = '''
     SELECT OrderNumber
     FROM OrderHeader
@@ -181,7 +181,7 @@ def OrderNumber(db):
     return results
 
 
-def OrderBookName(db, number):
+def order_book_name(db, number):
     sql = '''
     SELECT Stock.Title
     FROM OrderLines
@@ -193,7 +193,7 @@ def OrderBookName(db, number):
     return results
 
 
-def OrderQuantity(db, orderNumber):
+def order_quantity(db, orderNumber):
     sql = '''
     SELECT Quantity
     FROM OrderLines
@@ -203,7 +203,7 @@ def OrderQuantity(db, orderNumber):
     return results
 
 
-def OrderLineCost(db, number):
+def order_line_cost(db, number):
     sql = '''
     SELECT LinePrice
     FROM OrderLines
@@ -213,7 +213,7 @@ def OrderLineCost(db, number):
     return results
 
 
-def findStockCode(db, title):
+def find_stock_code(db, title):
     sql = '''
     SELECT StockID
     FROM Stock
@@ -223,7 +223,7 @@ def findStockCode(db, title):
     return results
 
 
-def findCustomerID(db, name):
+def find_customer_id(db, name):
     sql = '''
     SELECT CustomerID
     FROM Customer
@@ -233,7 +233,7 @@ def findCustomerID(db, name):
     return results
 
 
-def findStockPrice(db, ID):
+def find_stock_price(db, ID):
     sql = '''
     SELECT ListPrice
     FROM Stock
@@ -243,7 +243,7 @@ def findStockPrice(db, ID):
     return results
 
 
-def findAuthor(db, ID):
+def find_author(db, ID):
     sql = '''
     SELECT Author
     FROM Stock
@@ -253,7 +253,7 @@ def findAuthor(db, ID):
     return results
 
 
-def findStockQuantity(db, ID):
+def find_stock_quantity(db, ID):
     sql = '''
     SELECT Quantity
     FROM Stock
@@ -263,7 +263,7 @@ def findStockQuantity(db, ID):
     return results
 
 
-def findDiscount(db, name):
+def find_discount(db, name):
     sql = '''
     SELECT Discount
     FROM Customer
@@ -273,7 +273,7 @@ def findDiscount(db, name):
     return results
 
 
-def findAddress(db, ID):
+def find_address(db, ID):
     sql = '''
     SELECT Address
     FROM Customer
@@ -283,39 +283,92 @@ def findAddress(db, ID):
     return results
 
 
-def AddCustomerDetails(db, data):
+def find_customer_email(db, ID):
+    sql = '''
+    SELECT Email
+    FROM Customer
+    WHERE CustomerID = ?
+    '''
+    results = sql_find(db, ID, sql)
+    return results
+
+
+def find_customer_tel(db, ID):
+    sql = '''
+    SELECT Tel
+    FROM Customer
+    WHERE CustomerID = ?
+    '''
+    results = sql_find(db, ID, sql)
+    return results
+
+
+def find_customer_address(db, ID):
+    sql = '''
+    SELECT Address
+    FROM Customer
+    WHERE CustomerID = ?
+    '''
+    results = sql_find(db, ID, sql)
+    return results
+
+
+def find_customer_discount(db, ID):
+    sql = '''
+    SELECT Discount
+    FROM Customer
+    WHERE CustomerID = ?
+    '''
+    results = sql_find(db, ID, sql)
+    return results
+
+
+def find_administrator(db, ID):
+    sql = '''
+    SELECT Administrator
+    FROM Users
+    WHERE UserName = ?
+    '''
+    results = sql_find(db, ID, sql)
+    return results
+
+
+def add_customer_details(db, data):
     sql = '''
     INSERT INTO Customer (Name, Email, Tel, Address, Discount, TotalSpent)
     VALUES(?, ?, ?, ?, ?, ?)'''
     sql_add(db, data, sql)
-    pass
 
 
-def AddStockDetails(db, data):
+def add_stock_details(db, data):
     sql = '''
     INSERT INTO Stock (Title, Author, ListPrice, Quantity)
     VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
-    pass
 
 
-def AddHeaderDetails(db, data):
+def add_header_details(db, data):
     sql = '''
     INSERT INTO OrderHeader (CustomerID, DeliveryAddress, DeliveryCharge, OrderDate, TotalCost)
     VALUES(?, ?, ?, ?, ?)'''
     sql_add(db, data, sql)
-    pass
 
 
-def AddLineDetails(db, data):
+def add_line_details(db, data):
     sql = '''
     INSERT INTO OrderLines (OrderNumber, StockCode, Quantity, LinePrice)
     VALUES(?, ?, ?, ?)'''
     sql_add(db, data, sql)
-    pass
 
 
-def UpdateOrderCost(db, number):
+def add_user(db, data):
+    sql = '''
+    INSERT INTO Users (UserName, Password, Administrator)
+    VALUES(?, ?, ?)'''
+    sql_add(db, data, sql)
+
+
+def update_order_cost(db, number):
     sql = '''
     UPDATE OrderHeader
     SET TotalCost =(
@@ -324,30 +377,28 @@ def UpdateOrderCost(db, number):
     WHERE OrderHeader.OrderNumber = ?
     '''
     sql_update(db, number, sql)
-    pass
 
 
-def UpdateTotalSpent(db, ID):
+def update_total_spent(db, ID):
     sql = '''
     UPDATE Customer
     SET TotalSpent =(
     SELECT sum(OrderHeader.TotalCost) FROM OrderHeader WHERE OrderHeader.CustomerID = Customer.CustomerID)
     WHERE Customer.CustomerID = ?
     '''
-    print(ID)
     sql_update(db, ID, sql)
 
 
-def UpdateAuthor(db, data, ID):
+def update_author(db, data, ID):
     sql = ('''
     UPDATE Stock
-    SET Author = ''' + data + '''
+    SET Author = "''' + data + '''"
     WHERE Stock.StockID = ?
     ''')
     sql_update(db, ID, sql)
 
 
-def UpdateStockPrice(db, data, ID):
+def update_stock_price(db, data, ID):
     sql = ('''
     UPDATE Stock
     SET ListPrice = ''' + data + '''
@@ -356,7 +407,7 @@ def UpdateStockPrice(db, data, ID):
     sql_update(db, ID, sql)
 
 
-def UpdateQuantity(db, data, ID):
+def update_quantity(db, data, ID):
     sql = ('''
     UPDATE Stock
     SET Quantity = ''' + data + '''
@@ -365,7 +416,73 @@ def UpdateQuantity(db, data, ID):
     sql_update(db, ID, sql)
 
 
-def ReduceQuantity(db, data, ID):
+def update_author(db, data, ID):
+    sql = ('''
+    UPDATE Stock
+    SET Author = "''' + data + '''"
+    WHERE Stock.StockID = ?
+    ''')
+    sql_update(db, ID, sql)
+
+
+def update_email(db, data, ID):
+    if data is None:
+        sql = ('''
+          UPDATE Customer
+          SET Email = NULL
+          WHERE Customer.CustomerID = ?
+          ''')
+    else:
+        sql = ('''
+        UPDATE Customer
+        SET Email = "''' + data + '''"
+        WHERE Customer.CustomerID = ?
+        ''')
+    sql_update(db, ID, sql)
+
+
+def update_tel(db, data, ID):
+    if data is None:
+        sql = ('''
+          UPDATE Customer
+          SET Tel = NULL
+          WHERE Customer.CustomerID = ?
+          ''')
+    else:
+        sql = ('''
+        UPDATE Customer
+        SET Tel = "''' + data + '''"
+        WHERE Customer.CustomerID = ?
+        ''')
+    sql_update(db, ID, sql)
+
+
+def update_address(db, data, ID):
+    if data is None:
+        sql = ('''
+          UPDATE Customer
+          SET Address = NULL
+          WHERE Customer.CustomerID = ?
+          ''')
+    else:
+        sql = ('''
+        UPDATE Customer
+        SET Address = "''' + data + '''"
+        WHERE Customer.CustomerID = ?
+        ''')
+    sql_update(db, ID, sql)
+
+
+def update_discount(db, data, ID):
+    sql = ('''
+    UPDATE Customer
+    SET Discount = ''' + data + '''
+    WHERE Customer.CustomerID = ?
+    ''')
+    sql_update(db, ID, sql)
+
+
+def reduce_quantity(db, data, ID):
     sql = ('''
     UPDATE Stock
     SET Quantity = (Quantity - ''' + data + ''' )
@@ -374,7 +491,7 @@ def ReduceQuantity(db, data, ID):
     sql_update(db, ID, sql)
 
 
-def checkLogin(db, name):
+def check_login(db, name):
     sql = '''
     SELECT Password
     FROM Users
@@ -400,7 +517,6 @@ def sql_add(db, data, command):
         cur = con.cursor()
         cur.execute(command, data)
         con.commit()
-    pass
 
 
 def sql_find(db, data, command):
@@ -428,7 +544,6 @@ def sql_update(db, data, command):
         cur = con.cursor()
         cur.execute(command, (data,))
         con.commit()
-    pass
 
 
 '''update OrderHeader
@@ -440,10 +555,9 @@ SELECT sum(OrderLines.LinePrice) from OrderLines where OrderLines.OrderNumber = 
 '''    
 update Customer
 set TotalSpent =(
-SELECT sum(OrderHeader.TotalCost) from OrderHeader where OrderHeader.CustomerID = Customer.CustomerID
-)
+SELECT sum(OrderHeader.TotalCost) from OrderHeader where OrderHeader.CustomerID = Customer.CustomerID)'''
     
-update OrderHeader
+'''update OrderHeader
 set TotalCost =(
 OrderHeader.DeliveryCharge +(
 SELECT sum(OrderLines.LinePrice) from OrderLines where OrderLines.OrderNumber = OrderHeader.OrderNumber)

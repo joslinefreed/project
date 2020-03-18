@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>addCustomer</class>
- <widget class="QDialog" name="addCustomer">
+ <class>updateCustomer</class>
+ <widget class="QDialog" name="updateCustomer">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add Customer</string>
+   <string>Update Customer</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(203, 235, 255);</string>
@@ -115,19 +115,6 @@ font: 10pt &quot;Calibri&quot;;</string>
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="nameLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>30</y>
-     <width>101</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="emailLineEdit">
    <property name="geometry">
     <rect>
@@ -180,20 +167,17 @@ font: 10pt &quot;Calibri&quot;;</string>
     <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
-  <widget class="QLabel" name="errorLabel">
+  <widget class="QComboBox" name="nameComboBox">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>5</y>
-     <width>341</width>
-     <height>16</height>
+     <y>30</y>
+     <width>101</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Error Message</string>
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
  </widget>
@@ -202,7 +186,7 @@ font: 10pt &quot;Calibri&quot;;</string>
   <connection>
    <sender>rejectButton</sender>
    <signal>clicked()</signal>
-   <receiver>addCustomer</receiver>
+   <receiver>updateCustomer</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -218,7 +202,7 @@ font: 10pt &quot;Calibri&quot;;</string>
   <connection>
    <sender>acceptButton</sender>
    <signal>clicked()</signal>
-   <receiver>addCustomer</receiver>
+   <receiver>updateCustomer</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -231,5 +215,24 @@ font: 10pt &quot;Calibri&quot;;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>nameComboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>updateCustomer</receiver>
+   <slot>refresh_line_edits(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>59</x>
+     <y>52</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>refresh_line_edits(QString)</slot>
+ </slots>
 </ui>

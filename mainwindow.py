@@ -1,21 +1,32 @@
 import sys
 
-from PyQt5.QtCore import QCoreApplication
+from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5.QtCore import QObject
+from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt5.uic.properties import QtGui
 
-import datalayer
-import login
-import stockdialog
+import adduser
 import customerdialog
+import datalayer
 import headerdialog
 import linedialog
-
-from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import QWidget, QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView
-
+import login
+import stockdialog
 import stockupdate
+from customerupdate import CustomerUpdate
 
 win1 = uic.loadUiType("Interface.ui")[0]
 db = 'Book Selling Database.db'
+
+sys._excepthook = sys.excepthook
+
+
+def my_exception_hook(exectype, value, traceback):
+    print(exectype, value, traceback)
+    sys.exit(1)
+
+
+sys.excepthook = my_exception_hook
 
 
 class NumericTableWidgetItem(QTableWidgetItem):
@@ -48,61 +59,58 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         login_dialog = login.FirstWindow()
         login_dialog.exec_()
 
-        if not login_dialog.signedin:
+        if not login_dialog.signedIn:
             sys.exit(0)
-        else:
-            pass
 
         self.setupUi(self)
-        self.refreshTab(0)
+        self.refresh_tab(0)
+
+        if not login_dialog.administrator:
+            self.addUserButton.hide()
 
         # hide help text
         self.helpWidget.hide()
 
         # Get the header view from the stock table and connect it for when the section is clicked
-        stock_table: QTableWidget = self.findStockTable()
+        stock_table: QTableWidget = self.find_stock_table()
         stock_header: QHeaderView = stock_table.horizontalHeader()
-        stock_header.sectionClicked.connect(self.headerSectionClicked)
+        stock_header.sectionClicked.connect(self.header_section_clicked)
 
         # Get the header view from the customer table and connect it for when the section is clicked
-        customer_table: QTableWidget = self.findCustomerTable()
+        customer_table: QTableWidget = self.find_customer_table()
         customer_header: QHeaderView = customer_table.horizontalHeader()
-        customer_header.sectionClicked.connect(self.headerSectionClicked)
+        customer_header.sectionClicked.connect(self.header_section_clicked)
 
         # Get the header view from the headers table and connect it for when the section is clicked
-        headers_table: QTableWidget = self.findHeadersTable()
+        headers_table: QTableWidget = self.find_headers_table()
         headers_horizontal_header: QHeaderView = headers_table.horizontalHeader()
-        headers_horizontal_header.sectionClicked.connect(self.headerSectionClicked)
+        headers_horizontal_header.sectionClicked.connect(self.header_section_clicked)
         headers_vertical_header: QHeaderView = headers_table.verticalHeader()
-        headers_vertical_header.sectionClicked.connect(self.verticalHeaderSectionClicked)
+        headers_vertical_header.sectionClicked.connect(self.vertical_header_section_clicked)
 
-        lines_table: QTableWidget = self.findLinesTable()
+        lines_table: QTableWidget = self.find_lines_table()
         lines_header: QHeaderView = lines_table.horizontalHeader()
-        lines_header.sectionClicked.connect(self.headerSectionClicked)
+        lines_header.sectionClicked.connect(self.header_section_clicked)
 
-    def loginCancelled(self):
-        app = QtWidgets.QApplication(sys.argv)
-        app.exec_()
-
-    def refreshTab(self, tabnumber: int):
+    def refresh_tab(self, tabNumber: int):
 
         # check tab has not been loaded
-        if not self.loadedTab[tabnumber]:
+        if not self.loadedTab[tabNumber]:
             # load data for the relevant table
-            if tabnumber == 0:
-                self.refreshStock()
-            elif tabnumber == 1:
-                self.refreshCustomers()
-            elif tabnumber == 2:
-                self.refreshHeader()
+            if tabNumber == 0:
+                self.refresh_stock()
+            elif tabNumber == 1:
+                self.refresh_customers()
+            elif tabNumber == 2:
+                self.refresh_header()
             # set that tab to loaded
-            self.loadedTab[tabnumber] = True
+            self.loadedTab[tabNumber] = True
             # update current tab number
-            self.currentTab = tabnumber
+            self.currentTab = tabNumber
         else:
-            self.currentTab = tabnumber
+            self.currentTab = tabNumber
 
-    def refreshColumn(self, results, column, table, size, numeric=False, price=False):
+    def refresh_column(self, results, column, table, size, numeric=False, price=False):
 
         # Set the table to column to the size passed into the function
         table.setColumnWidth(column, size)
@@ -130,41 +138,44 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         else:
             for row in results:
                 # Set the item in the table to being the name
-                number = [self.getPrice(x) for x in row][0]
+                number = [self.get_price(x) for x in row][0]
 
                 table.setItem(row_index, column, NumericTableWidgetItem(number))
                 row_index = row_index + 1
 
-    def getPrice(self, number):
-        price = str("{0:.2f}".format(number))
-        return price
+    def get_price(self, number):
+        if number is None:
+            pass
+        else:
+            price = str("{0:.2f}".format(number))
+            return price
 
-    def headerSectionClicked(self, logicalindex: int):
+    def header_section_clicked(self, logicalIndex: int):
 
         # Find the relevant table and selected header
         if self.currentTab == 0:
-            table: QTableWidget = self.findStockTable()
+            table: QTableWidget = self.find_stock_table()
             selected_header = self.selectedHeader[0]
         elif self.currentTab == 1:
-            table: QTableWidget = self.findCustomerTable()
+            table: QTableWidget = self.find_customer_table()
             selected_header = self.selectedHeader[1]
-        elif self.currentTab == 2:
-            table: QTableWidget = self.findHeadersTable()
+        else:
+            table: QTableWidget = self.find_headers_table()
             selected_header = self.selectedHeader[2]
 
         header: QHeaderView = table.horizontalHeader()
 
         # Check if the table is currently sorted in ascending order and if so sort in descending order
-        if selected_header != logicalindex:
-            table.sortItems(logicalindex, QtCore.Qt.AscendingOrder)
+        if selected_header != logicalIndex:
+            table.sortItems(logicalIndex, QtCore.Qt.AscendingOrder)
             # Change indicator on the header
-            header.setSortIndicator(logicalindex, QtCore.Qt.AscendingOrder)
+            header.setSortIndicator(logicalIndex, QtCore.Qt.AscendingOrder)
             # set selectedHeader to the new selected header index
-            selected_header = logicalindex
+            selected_header = logicalIndex
         else:
-            table.sortItems(logicalindex, QtCore.Qt.DescendingOrder)
+            table.sortItems(logicalIndex, QtCore.Qt.DescendingOrder)
             # Change indicator on the header
-            header.setSortIndicator(logicalindex, QtCore.Qt.DescendingOrder)
+            header.setSortIndicator(logicalIndex, QtCore.Qt.DescendingOrder)
             # reset selectedHeader as the column is currently sorted in descending order
             selected_header = None
 
@@ -174,141 +185,143 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         # return the update selected header
         self.selectedHeader[self.currentTab] = selected_header
 
-    def findStockTable(self) -> QTableWidget:
+    def find_stock_table(self) -> QObject:
 
         # Find the stock table widget
-        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-        stock_tab: QWidget = tab.findChild(QWidget, "stockTab")
-        table: QTableWidget = stock_tab.findChild(QTableWidget, "stockTable")
+        tab = self.findChild(QTabWidget, "tabWidget")
+        stock_tab = tab.findChild(QWidget, "stockTab")
+        table = stock_tab.findChild(QTableWidget, "stockTable")
 
         return table
 
-    def refreshStock(self):
+    def refresh_stock(self):
 
         # Find the stock table widget
-        table: QTableWidget = self.findStockTable()
+        table: QTableWidget = self.find_stock_table()
         header: QHeaderView = table.horizontalHeader()
 
         # Read the data from the database and enter it into the relevant column
-        title = datalayer.StockTitle(db)
-        self.refreshColumn(title, 0, table, 150)
-        author = datalayer.StockAuthor(db)
-        self.refreshColumn(author, 1, table, 150)
+        title = datalayer.stock_title(db)
+        self.refresh_column(title, 0, table, 150)
+        author = datalayer.stock_author(db)
+        self.refresh_column(author, 1, table, 150)
         # Set numeric to True for price and quantity
-        price = datalayer.StockListPrice(db)
-        self.refreshColumn(price, 2, table, 50, True, True)
-        quantity = datalayer.StockQuantity(db)
-        self.refreshColumn(quantity, 3, table, 50, True)
+        price = datalayer.stock_list_price(db)
+        self.refresh_column(price, 2, table, 50, True, True)
+        quantity = datalayer.stock_quantity(db)
+        self.refresh_column(quantity, 3, table, 50, True)
 
+        table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         header.setSortIndicatorShown(False)
         self.selectedHeader[self.currentTab] = None
 
-    def addStock(self):
+    def add_stock(self):
 
         # Open add stock dialog and then refresh stock
         stock_dialog = stockdialog.StockDialog()
         stock_dialog.exec_()
-        self.refreshStock()
+        self.refresh_stock()
 
-    def updateStock(self):
+    def update_stock(self):
         stock_update = stockupdate.StockUpdate()
         stock_update.exec_()
-        self.refreshStock()
-        pass
+        self.refresh_stock()
 
-    def findCustomerTable(self) -> QTableWidget:
+    def find_customer_table(self) -> QObject:
         # Find the customer table widget
-        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-        customer_tab: QWidget = tab.findChild(QWidget, "customerTab")
-        table: QTableWidget = customer_tab.findChild(QTableWidget, "customerTable")
+        tab = self.findChild(QTabWidget, "tabWidget")
+        customer_tab = tab.findChild(QWidget, "customerTab")
+        table = customer_tab.findChild(QTableWidget, "customerTable")
 
         return table
 
-    def refreshCustomers(self):
+    def refresh_customers(self):
         # Find the customer table widget
-        table: QTableWidget = self.findCustomerTable()
+        table: QTableWidget = self.find_customer_table()
         header: QHeaderView = table.horizontalHeader()
 
         # Read the data from the database and enter it into the relevant column
-        names = datalayer.CustomerName(db)
-        self.refreshColumn(names, 0, table, 100)
-        email = datalayer.CustomerEmail(db)
-        self.refreshColumn(email, 1, table, 100)
-        tel = datalayer.CustomerTel(db)
-        self.refreshColumn(tel, 2, table, 100)
-        address = datalayer.CustomerAddress(db)
-        self.refreshColumn(address, 3, table, 100)
+        names = datalayer.customer_name(db)
+        self.refresh_column(names, 0, table, 100)
+        email = datalayer.customer_email(db)
+        self.refresh_column(email, 1, table, 100)
+        tel = datalayer.customer_tel(db)
+        self.refresh_column(tel, 2, table, 100)
+        address = datalayer.customer_address(db)
+        self.refresh_column(address, 3, table, 100)
         # Set numeric to true for discount
-        discount = datalayer.CustomerDiscount(db)
-        self.refreshColumn(discount, 4, table, 50, True)
-        totalSpent = datalayer.CustomerTotalSpent(db)
-        self.refreshColumn(totalSpent, 5, table, 50, True, True)
+        discount = datalayer.customer_discount(db)
+        self.refresh_column(discount, 4, table, 50, True)
+        totalSpent = datalayer.customer_total_spent(db)
+        self.refresh_column(totalSpent, 5, table, 50, True, True)
 
+        table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         header.setSortIndicatorShown(False)
         self.selectedHeader[self.currentTab] = None
 
-    def addCustomer(self):
+    def add_customer(self):
 
         # Open add customer dialog and then refresh customer
         customer_dialog = customerdialog.CustomerDialog()
         customer_dialog.exec_()
-        self.refreshCustomers()
+        self.refresh_customers()
 
-    def searchCustomers(self):
-        pass
+    def update_customer(self):
+        customer_update = CustomerUpdate()
+        customer_update.exec_()
+        self.refresh_customers()
 
-    def findHeadersTable(self) -> QTableWidget:
+    def find_headers_table(self) -> QObject:
         # Find the order headers table widget
-        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-        orders_tab: QWidget = tab.findChild(QWidget, "ordersTab")
-        table: QTableWidget = orders_tab.findChild(QTableWidget, "headersTable")
+        tab = self.findChild(QTabWidget, "tabWidget")
+        orders_tab = tab.findChild(QWidget, "ordersTab")
+        table = orders_tab.findChild(QTableWidget, "headersTable")
+
         return table
 
-    def refreshHeader(self, lines=False):
+    def refresh_header(self, lines=False):
         # Find the stock table widget
-        headerTable: QTableWidget = self.findHeadersTable()
-        orderTable: QTableWidget = self.findLinesTable()
+        headerTable: QTableWidget = self.find_headers_table()
+        orderTable: QTableWidget = self.find_lines_table()
         header: QHeaderView = headerTable.horizontalHeader()
 
         # Read the data from the database and enter it into the relevant column
-        customerName = datalayer.OrderCustomerName(db)
-        self.refreshColumn(customerName, 0, headerTable, 100)
-        deliveryAddress = datalayer.OrderDeliveryAddress(db)
-        self.refreshColumn(deliveryAddress, 1, headerTable, 100)
+        customerName = datalayer.order_customer_name(db)
+        self.refresh_column(customerName, 0, headerTable, 100)
+        deliveryAddress = datalayer.order_delivery_address(db)
+        self.refresh_column(deliveryAddress, 1, headerTable, 100)
         # Set numeric True for delivery charge
-        deliveryCharge = datalayer.OrderDeliveryCharge(db)
-        self.refreshColumn(deliveryCharge, 2, headerTable, 75, True, True)
-        date = datalayer.OrderDate(db)
-        self.refreshColumn(date, 3, headerTable, 75)
-        totalCost = datalayer.OrderCost(db)
-        self.refreshColumn(totalCost, 4, headerTable, 45, True, True)
+        deliveryCharge = datalayer.order_delivery_charge(db)
+        self.refresh_column(deliveryCharge, 2, headerTable, 75, True, True)
+        date = datalayer.order_date(db)
+        self.refresh_column(date, 3, headerTable, 75)
+        totalCost = datalayer.order_cost(db)
+        self.refresh_column(totalCost, 4, headerTable, 45, True, True)
         # Set orderNumber column size to zero so it cant be seen
-        orderNumber = datalayer.OrderNumber(db)
-        self.refreshColumn(orderNumber, 5, headerTable, 0)
+        orderNumber = datalayer.order_number(db)
+        self.refresh_column(orderNumber, 5, headerTable, 0)
 
+        headerTable.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         header.setSortIndicatorShown(False)
         self.selectedHeader[self.currentTab] = None
 
         # only clear lines if refresh button is clicked
-        if lines:
-            pass
-        else:
+        if not lines:
             while orderTable.rowCount() > 0:
                 orderTable.removeRow(0)
             self.clickHeaderLabel.show()
-            pass
 
-    def addHeader(self):
+    def add_header(self):
 
         # Open add header dialog and then refresh header
         header_dialog = headerdialog.HeaderDialog()
         header_dialog.exec_()
         customerID = header_dialog.customerID
-        self.refreshHeader()
-        datalayer.UpdateTotalSpent(db, customerID)
+        self.refresh_header()
+        datalayer.update_total_spent(db, customerID)
 
-    def verticalHeaderSectionClicked(self, logicalindex: int):
-        headersTable: QTableWidget = self.findHeadersTable()
+    def vertical_header_section_clicked(self, logicalindex: int):
+        headersTable: QTableWidget = self.find_headers_table()
 
         # find Order Number that has been selected
         self.selectedOrderNumber = headersTable.item(logicalindex, 5).text()
@@ -316,51 +329,51 @@ class MainWindow(QtWidgets.QMainWindow, win1):
 
         self.clickHeaderLabel.hide()
         # refresh the OrderLines for relevant order number
-        self.refreshOrderLines()
+        self.refresh_order_lines()
 
-        pass
-
-    def refreshOrderLines(self):
-        linesTable: QTableWidget = self.findLinesTable()
+    def refresh_order_lines(self):
+        linesTable: QTableWidget = self.find_lines_table()
 
         # repeat the function for each column
-        bookName = datalayer.OrderBookName(db, self.selectedOrderNumber)
-        self.refreshColumn(bookName, 0, linesTable, 200)
+        bookName = datalayer.order_book_name(db, self.selectedOrderNumber)
+        self.refresh_column(bookName, 0, linesTable, 200)
 
         # Set numeric as true so it can be sorted correctly
-        quantity = datalayer.OrderQuantity(db, self.selectedOrderNumber)
-        self.refreshColumn(quantity, 1, linesTable, 100, True)
-        lineCost = datalayer.OrderLineCost(db, self.selectedOrderNumber)
-        self.refreshColumn(lineCost, 2, linesTable, 103, True, True)
+        quantity = datalayer.order_quantity(db, self.selectedOrderNumber)
+        self.refresh_column(quantity, 1, linesTable, 100, True)
+        lineCost = datalayer.order_line_cost(db, self.selectedOrderNumber)
+        self.refresh_column(lineCost, 2, linesTable, 103, True, True)
 
-    def findLinesTable(self) -> QTableWidget:
+        linesTable.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+
+    def find_lines_table(self) -> QObject:
         # Find the order headers table widget
-        tab: QTabWidget = self.findChild(QTabWidget, "tabWidget")
-        orders_tab: QWidget = tab.findChild(QWidget, "ordersTab")
-        table: QTableWidget = orders_tab.findChild(QTableWidget, "linesTable")
+        tab = self.findChild(QTabWidget, "tabWidget")
+        orders_tab = tab.findChild(QWidget, "ordersTab")
+        table = orders_tab.findChild(QTableWidget, "linesTable")
+
         return table
 
-    def addLines(self):
+    def add_lines(self):
         if self.selectedOrderNumber is not None:
             line_dialog = linedialog.LineDialog(self.selectedOrderNumber, self.selectedCustomerName)
             line_dialog.exec_()
-            self.refreshOrderLines()
+            self.refresh_order_lines()
 
-            customerID = datalayer.findCustomerID(db, self.selectedCustomerName)
+            customerID = datalayer.find_customer_id(db, self.selectedCustomerName)
 
             # call refresh header but dont clear lines table
-            self.refreshHeader(True)
-            datalayer.UpdateTotalSpent(db, customerID)
-        else:
-            pass
+            self.refresh_header(True)
+            datalayer.update_total_spent(db, customerID)
 
-    def searchOrders(self):
-        pass
+    def add_user(self):
+        user_dialog = adduser.UserDialog()
+        user_dialog.exec_()
 
     def help(self):
         self.helpWidget.show()
 
-    def closeHelp(self):
+    def close_help(self):
         self.helpWidget.hide()
 
 
