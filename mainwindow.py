@@ -86,11 +86,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         headers_horizontal_header: QHeaderView = headers_table.horizontalHeader()
         headers_horizontal_header.sectionClicked.connect(self.header_section_clicked)
         headers_vertical_header: QHeaderView = headers_table.verticalHeader()
-        headers_vertical_header.sectionClicked.connect(self.vertical_header_section_clicked)
-
-        lines_table: QTableWidget = self.find_lines_table()
-        lines_header: QHeaderView = lines_table.horizontalHeader()
-        lines_header.sectionClicked.connect(self.header_section_clicked)
+        headers_vertical_header.sectionClicked.connect(self.header_row_clicked)
 
     def refresh_tab(self, tabNumber: int):
 
@@ -320,7 +316,7 @@ class MainWindow(QtWidgets.QMainWindow, win1):
         self.refresh_header()
         datalayer.update_total_spent(db, customerID)
 
-    def vertical_header_section_clicked(self, logicalindex: int):
+    def header_row_clicked(self, logicalindex: int):
         headersTable: QTableWidget = self.find_headers_table()
 
         # find Order Number that has been selected

@@ -43,7 +43,7 @@ font: 12pt &quot;Calibri&quot;;</string>
     </rect>
    </property>
    <property name="text">
-    <string>User Name:</string>
+    <string>Username:</string>
    </property>
   </widget>
   <widget class="QLabel" name="passwordLabel">

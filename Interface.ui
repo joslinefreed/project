@@ -502,6 +502,10 @@ font: 12pt &quot;Calibri&quot;;</string>
      <string>Add User</string>
     </property>
    </widget>
+   <zorder>tabWidget</zorder>
+   <zorder>helpButton</zorder>
+   <zorder>addUserButton</zorder>
+   <zorder>helpWidget</zorder>
   </widget>
   <action name="actionOrders">
    <property name="text">
